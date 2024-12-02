@@ -38,17 +38,27 @@ class MarkTodoOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 
-# Define Mark TODO Operator
-# - Check for selected objects or user context.
-# - Prompt user for TODO description.
-# - Append the TODO item to the data structure.
-
-# Define View TODO Panel
 # - Display the list of TODO items.
 # - Allow users to:
 #   - Delete items.
 #   - Edit descriptions.
 #   - Highlight associated objects in the 3D view.
+
+# Define View TODO Panel
+class ViewTodoPanel(bpy.types.Panel):
+    bl_label = "TODO Manager"
+    bl_idname = "OBJECT_PT_todo_manager"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'TODO'
+
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="TODO Items:")
+
+        for item in TODO_ITEMS:
+            layout.label(text=f"- {item['object']}: {item['description']}")
+
 
 # Implement Storage
 # - Save TODO list with the Blender file.
