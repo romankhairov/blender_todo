@@ -38,11 +38,39 @@ class MarkTodoOperator(bpy.types.Operator):
         return {'FINISHED'}
 
 
-# - Display the list of TODO items.
-# - Allow users to:
-#   - Delete items.
-#   - Edit descriptions.
-#   - Highlight associated objects in the 3D view.
+# Add Delete TODO Operator
+class DeleteTodoOperator(bpy.types.Operator):
+    bl_idname = "object.delete_todo"
+    bl_label = "Delete TODO"
+    bl_description = "Delete a TODO note"
+
+    index: bpy.props.IntProperty()
+
+    def execute(self, context):
+        if 0 <= self.index < len(TODO_ITEMS):
+            removed = TODO_ITEMS.pop(self.index)
+            self.report({'INFO'}, f"Removed TODO for {removed['object']}")
+        else:
+            self.report({'WARNING'}, "Invalid TODO index")
+        return {'FINISHED'}
+
+# Update View Panel to Include Delete Button
+class ViewTodoPanel(bpy.types.Panel):
+    bl_label = "TODO Manager"
+    bl_idname = "OBJECT_PT_todo_manager"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'TODO'
+
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text="TODO Items:")
+
+        for i, item in enumerate(TODO_ITEMS):
+            row = layout.row()
+            row.label(text=f"- {item['object']}: {item['description']}")
+            row.operator(DeleteTodoOperator.bl_idname, text="Delete").index = i
+
 
 # Define View TODO Panel
 class ViewTodoPanel(bpy.types.Panel):
