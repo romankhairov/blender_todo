@@ -76,3 +76,15 @@ class ViewTodoPanel(bpy.types.Panel):
 # Test and Debug
 # - Ensure functionality works for various use cases.
 # - Handle edge cases like empty descriptions or no selection.
+
+# Register the Add-on
+def register():
+    bpy.utils.register_class(MarkTodoOperator)
+    bpy.utils.register_class(ViewTodoPanel)
+
+def unregister():
+    bpy.utils.unregister_class(MarkTodoOperator)
+    bpy.utils.unregister_class(ViewTodoPanel)
+
+if __name__ == "__main__":
+    register()
