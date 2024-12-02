@@ -2,6 +2,16 @@
 # - Create an operator to mark items as TODO.
 # - Create a panel to display TODO items.
 # - Register the add-on with Blender.
+bl_info = {
+    "name": "TODO Manager",
+    "blender": (2, 80, 0),
+    "category": "Object",
+    "version": (1, 0, 0),
+    "author": "Your Name",
+    "description": "A TODO management add-on for Blender",
+}
+
+import bpy
 
 # Create Data Structure for TODO Items
 # - Use a global list or Blender's custom properties to store TODO items.
