@@ -19,6 +19,24 @@ import bpy
 #   - Description
 #   - Associated object/scene
 #   - Timestamp or priority (optional)
+# Create Data Structure for TODO Items
+TODO_ITEMS = []
+
+# Define Mark TODO Operator
+class MarkTodoOperator(bpy.types.Operator):
+    bl_idname = "object.mark_todo"
+    bl_label = "Mark TODO"
+    bl_description = "Mark the selected object with a TODO note"
+
+    def execute(self, context):
+        obj = context.object
+        if obj:
+            TODO_ITEMS.append({"object": obj.name, "description": "TODO Item"})
+            self.report({'INFO'}, f"TODO added for {obj.name}")
+        else:
+            self.report({'WARNING'}, "No object selected")
+        return {'FINISHED'}
+
 
 # Define Mark TODO Operator
 # - Check for selected objects or user context.
